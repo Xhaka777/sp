@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -12,6 +12,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { AuthStackParamList } from '../../navigation/AuthNavigator';
+import WelcomeModal from '../../components/WelcomeModal';
 
 const { width, height } = Dimensions.get('window');
 
@@ -19,6 +20,21 @@ type WelcomeScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList,
 
 export default function WelcomeScreen() {
   const navigation = useNavigation<WelcomeScreenNavigationProp>();
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
+
+  const handleSignIn = () => {
+    setShowWelcomeModal(true);
+  };
+
+  const handleModalClose = () => {
+    setShowWelcomeModal(false);
+  };
+
+  const handleModalContinue = () => {
+    setShowWelcomeModal(false);
+    // Navigate to sign in screen after modal is closed
+    navigation.navigate('SignIn');
+  };
 
   return (
     <View style={styles.container}>
@@ -44,7 +60,7 @@ export default function WelcomeScreen() {
           <View style={styles.buttonContainer}>
             <TouchableOpacity
               style={styles.signInButton}
-              onPress={() => navigation.navigate('SignIn')}
+              onPress={handleSignIn}
               activeOpacity={0.8}
             >
               <Text style={styles.signInButtonText}>Sign in</Text>
@@ -71,6 +87,13 @@ export default function WelcomeScreen() {
           </View>
         </View>
       </ImageBackground>
+
+      {/* Welcome Modal */}
+      <WelcomeModal
+        visible={showWelcomeModal}
+        onClose={handleModalClose}
+        onContinue={handleModalContinue}
+      />
     </View>
   );
 }

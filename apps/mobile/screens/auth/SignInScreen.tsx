@@ -15,6 +15,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { AuthStackParamList } from '../../navigation/AuthNavigator';
+import VideoWelcomeModal from '../../components/VideoWelcomeModal';
 
 type SignInScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList, 'SignIn'>;
 
@@ -24,24 +25,25 @@ export default function SignInScreen() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showWelcomeModal, setShowWelcomeModal] = useState(false);
 
   const handleSignIn = async () => {
-    if (!email || !password) {
-      setError('Please enter both email and password');
-      return;
-    }
+    // Show welcome modal immediately when sign in is clicked
+    setShowWelcomeModal(true);
+  };
 
-    setLoading(true);
-    setError('');
+  const handleWelcomeModalClose = () => {
+    setShowWelcomeModal(false);
+  };
 
-    try {
-
-    } catch (err) {
-      setError('An unexpected error occurred. Please try again.');
-      console.error('Sign in error:', err);
-    } finally {
-      setLoading(false);
-    }
+  const handleWelcomeModalContinue = () => {
+    setShowWelcomeModal(false);
+    // Here you can add your actual sign-in logic or navigate to the main app
+    // For now, let's just log that we're continuing
+    console.log('Continue clicked - proceeding with sign in...');
+    
+    // You can add actual authentication logic here
+    // navigation.navigate('Main'); // Uncomment when ready to navigate
   };
 
   return (
@@ -139,6 +141,13 @@ export default function SignInScreen() {
           </View>
         </View>
       </ScrollView>
+
+      {/* Video Welcome Modal */}
+      <VideoWelcomeModal
+        visible={showWelcomeModal}
+        onClose={handleWelcomeModalClose}
+        onContinue={handleWelcomeModalContinue}
+      />
     </KeyboardAvoidingView>
   );
 }

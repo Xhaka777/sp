@@ -2,10 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { StyleSheet, Platform } from 'react-native';
 import HomeScreen from '../screens/main/HomeScreen';
-import DiscoverScreen from '../screens/main/DiscoverScreen';
-import MatchesScreen from '../screens/main/MatchesScreen';
-import MessagesScreen from '../screens/main/MessagesScreen';
-import ProfileScreen from '../screens/main/ProfileScreen';
+
 
 export type MainTabParamList = {
   Home: undefined;
@@ -34,34 +31,6 @@ export default function MainNavigator() {
         component={HomeScreen}
         options={{
           tabBarLabel: 'Home',
-        }}
-      />
-      <Tab.Screen
-        name="Discover"
-        component={DiscoverScreen}
-        options={{
-          tabBarLabel: 'Discover',
-        }}
-      />
-      <Tab.Screen
-        name="Matches"
-        component={MatchesScreen}
-        options={{
-          tabBarLabel: 'Matches',
-        }}
-      />
-      <Tab.Screen
-        name="Messages"
-        component={MessagesScreen}
-        options={{
-          tabBarLabel: 'Messages',
-        }}
-      />
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarLabel: 'Profile',
         }}
       />
     </Tab.Navigator>

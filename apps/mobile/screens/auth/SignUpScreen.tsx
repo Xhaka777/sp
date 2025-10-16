@@ -14,7 +14,6 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { AuthStackParamList } from '../../navigation/AuthNavigator';
-import { supabase } from '../../services/supabase';
 
 type SignUpScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList, 'SignUp'>;
 
@@ -71,19 +70,7 @@ export default function SignUpScreen() {
     setError('');
 
     try {
-      const { error: signUpError } = await supabase.auth.signUp({
-        email: email.trim().toLowerCase(),
-        password,
-        options: {
-          data: {
-            full_name: fullName.trim(),
-          },
-        },
-      });
 
-      if (signUpError) {
-        setError(signUpError.message);
-      }
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');
       console.error('Sign up error:', err);

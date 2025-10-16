@@ -15,7 +15,6 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { AuthStackParamList } from '../../navigation/AuthNavigator';
-import { supabase } from '../../services/supabase';
 
 type SignInScreenNavigationProp = NativeStackNavigationProp<AuthStackParamList, 'SignIn'>;
 
@@ -36,14 +35,7 @@ export default function SignInScreen() {
     setError('');
 
     try {
-      const { error: signInError } = await supabase.auth.signInWithPassword({
-        email: email.trim().toLowerCase(),
-        password,
-      });
 
-      if (signInError) {
-        setError(signInError.message);
-      }
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');
       console.error('Sign in error:', err);

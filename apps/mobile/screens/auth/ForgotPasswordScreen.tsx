@@ -14,7 +14,6 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import type { AuthStackParamList } from '../../navigation/AuthNavigator';
-import { supabase } from '../../services/supabase';
 
 type ForgotPasswordScreenNavigationProp = NativeStackNavigationProp<
   AuthStackParamList,
@@ -45,18 +44,7 @@ export default function ForgotPasswordScreen() {
     setSuccess(false);
 
     try {
-      const { error: resetError } = await supabase.auth.resetPasswordForEmail(
-        email.trim().toLowerCase(),
-        {
-          redirectTo: 'spooned://reset-password',
-        }
-      );
 
-      if (resetError) {
-        setError(resetError.message);
-      } else {
-        setSuccess(true);
-      }
     } catch (err) {
       setError('An unexpected error occurred. Please try again.');
       console.error('Password reset error:', err);
